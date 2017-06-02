@@ -21,6 +21,8 @@ IF(BUILD_WOLFSSL)
   ADD_SUBDIRECTORY(pWolfDecrypt)
 ENDIF()
 
+ADD_SUBDIRECTORY(pMoosTestApp)
+
 ##############################################################################
 #                           END of CMakeLists.txt
 ##############################################################################
