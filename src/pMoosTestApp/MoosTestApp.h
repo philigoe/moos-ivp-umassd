@@ -41,9 +41,15 @@ class CMOOSMoosTestApp : public CMOOSApp
     //double dfLonOrigin;
     double dfTimeNow;
 
+    bool newDesiredHeadingValue;
+    double desiredHeading;
+    bool newDesiredSpeedValue;
+    double desiredSpeed;
+    bool newDesiredDepthValue;
+    double desiredDepth;
+
     // Functions
     void DoRegistrations();
 };
 
 #endif // #ifndef MOOS_APP_MoosTestApp_H_
-

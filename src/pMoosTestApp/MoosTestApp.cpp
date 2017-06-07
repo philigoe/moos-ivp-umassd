@@ -8,19 +8,15 @@
 #include <math.h>
 #include <sstream>
 
-double lastDesiredHeading;
-double desiredHeading;
-double lastDesiredSpeed;
-double desiredSpeed;
-double lastDesiredDepth;
-double desiredDepth;
-
 /*************************************************************************//**
  * A constructor for the MoosTestApp object.
  */
 CMOOSMoosTestApp::CMOOSMoosTestApp()
 {
   // Initialization
+  newDesiredHeadingValue = false;
+  newDesiredSpeedValue = false;
+  newDesiredDepthValue = false;
 
   // Character classification and case convention reset to POSIX standard
   setlocale(LC_CTYPE, "");
@@ -75,12 +71,15 @@ bool CMOOSMoosTestApp::OnNewMail(MOOSMSG_LIST &NewMail)
     if (Message.m_sKey == "DESIRED_HEADING")
     {
       desiredHeading = Message.m_dfVal;
+      newDesiredHeadingValue = true;
     } else if (Message.m_sKey == "DESIRED_SPEED")
     {
       desiredSpeed = Message.m_dfVal;
+      newDesiredSpeedValue = true;
     } else if (Message.m_sKey == "DESIRED_DEPTH")
     {
       desiredDepth = Message.m_dfVal;
+      newDesiredDepthValue = true;
     }
   }
 
@@ -95,15 +94,15 @@ bool CMOOSMoosTestApp::OnNewMail(MOOSMSG_LIST &NewMail)
 bool CMOOSMoosTestApp::Iterate()
 {
   // Main
-  if(desiredHeading != lastDesiredHeading) {
+  if(newDesiredHeadingValue) {
     MOOSTrace("Desired heading value: %f\n", desiredHeading);
-    lastDesiredHeading = desiredHeading;
-  } else if(desiredSpeed != lastDesiredSpeed) {
+    newDesiredHeadingValue = false;
+  } else if(newDesiredSpeedValue) {
     MOOSTrace("Desired speed value: %f\n", desiredSpeed);
-    lastDesiredSpeed = desiredSpeed;
-  } else if(desiredDepth != lastDesiredDepth) {
+    newDesiredSpeedValue = false;
+  } else if(newDesiredDepthValue) {
     MOOSTrace("Desired depth value: %f\n", desiredDepth);
-    lastDesiredDepth = desiredDepth;
+    newDesiredDepthValue = false;
   }
 
   /* Success */
