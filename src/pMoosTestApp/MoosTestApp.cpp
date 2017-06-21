@@ -18,6 +18,10 @@ CMOOSMoosTestApp::CMOOSMoosTestApp()
   newDesiredSpeedValue = false;
   newDesiredDepthValue = false;
 
+  desiredHeading = 0.0;
+  desiredSpeed = 0.0;
+  desiredDepth = 0.0;
+
   // Character classification and case convention reset to POSIX standard
   setlocale(LC_CTYPE, "");
 }
