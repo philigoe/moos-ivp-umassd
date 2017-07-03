@@ -28,4 +28,15 @@
 *.out
 *.app
 
+# Simulated mission data from test mission
+missions/testMission/*
+
+# Misc files to exclude
+missions/testMission/.LastOpenedMOOSLogDirectory
+
+# Built / bin files
+build/*
+bin/*
+
+# Notes
 notes.txt
