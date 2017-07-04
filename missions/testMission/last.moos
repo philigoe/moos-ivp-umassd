@@ -30,10 +30,11 @@ ProcessConfig = ANTLER
     Run = uProcessWatch     @ NewConsole = false
 
     //Logging
-    Run = pLogger           @ NewConsole = false
+    Run = pLogger           @ NewConsole = true
 
     // Additional process
-    Run = pMoosTestApp      @ NewConsole =  true
+    Run = pMoosCoordinateConversion   @ NewConsole =  true
+    Run = pMoosCoordinateConsumer     @ NewConsole =  true
 }
 
 
@@ -208,10 +209,21 @@ ProcessConfig = pLogger
 
 
 //----------------------------------------------------------------------------
-ProcessConfig = pMoosTestApp
+ProcessConfig = pMoosCoordinateConversion
 {
   AppTick   = 1
   CommsTick = 1
+
+  //Configuration Parameters
+}
+
+//----------------------------------------------------------------------------
+ProcessConfig = pMoosCoordinateConsumer
+{
+  AppTick   = 1
+  CommsTick = 1
+
+  //Configuration Parameters
 }
 
 

@@ -28,7 +28,8 @@ ProcessConfig = ANTLER
     Run = pLogger           @ NewConsole = $(POPUP)
 
     // Additional process
-    Run = pMoosTestApp      @ NewConsole =  true
+    Run = pMoosCoordinateConversion   @ NewConsole =  true
+    Run = pMoosCoordinateConsumer     @ NewConsole =  true
 }
 
 
@@ -43,4 +44,5 @@ ProcessConfig = ANTLER
 #include plugs/app_pNodeReporter.plug
 #include plugs/app_uProcessWatch.plug
 #include plugs/app_pLogger.plug
-#include plugs/app_pMoosTestApp.plug
+#include plugs/app_pMoosCoordinateConversion.plug
+#include plugs/app_pMoosCoordinateConsumer.plug

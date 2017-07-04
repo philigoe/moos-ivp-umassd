@@ -1,6 +1,9 @@
 //----------------------------------------------------------------------------
-ProcessConfig = pMoosTestApp
+ProcessConfig = pMoosCoordinateConsumer
 {
   AppTick   = 1
   CommsTick = 1
+
+  //Configuration Parameters
 }
+

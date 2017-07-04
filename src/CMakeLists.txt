@@ -22,8 +22,9 @@ IF(BUILD_WOLFSSL)
 ENDIF()
 
 ADD_SUBDIRECTORY(pMoosTestApp)
+ADD_SUBDIRECTORY(pMoosCoordinateConversion)
+ADD_SUBDIRECTORY(pMoosCoordinateConsumer)
 
 ##############################################################################
 #                           END of CMakeLists.txt
 ##############################################################################
-
