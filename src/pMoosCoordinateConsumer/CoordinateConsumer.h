@@ -41,9 +41,13 @@ class CMOOSCoordinateConsumer : public CMOOSApp
     //double dfLonOrigin;
     double dfTimeNow;
 
+    bool newNavXValue;
+    double navX;
+    bool newNavYValue;
+    double navY;
+
     // Functions
     void DoRegistrations();
 };
 
 #endif // #ifndef MOOS_APP_CoordinateConsumer_H_
-

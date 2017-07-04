@@ -30,7 +30,7 @@ ProcessConfig = ANTLER
     Run = uProcessWatch     @ NewConsole = false
 
     //Logging
-    Run = pLogger           @ NewConsole = true
+    Run = pLogger           @ NewConsole = false
 
     // Additional process
     Run = pMoosCoordinateConversion   @ NewConsole =  true

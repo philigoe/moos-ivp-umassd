@@ -10,8 +10,12 @@
  * A constructor for the CoordinateConsumer object.
  */
 CMOOSCoordinateConsumer::CMOOSCoordinateConsumer()
-{   
+{
   // Initialization
+  newNavXValue = false;
+  navX = 0.0;
+  newNavYValue = false;
+  navY = 0.0;
 
   // Character classification and case convention reset to POSIX standard
   setlocale(LC_CTYPE, "");
@@ -29,7 +33,7 @@ CMOOSCoordinateConsumer::~CMOOSCoordinateConsumer()
 
 /*************************************************************************//**
  * Overloaded function that is run once, when CoordinateConsumer first connects
- * to the MOOSdb.  Registration for MOOSdb variables we want to track takes 
+ * to the MOOSdb.  Registration for MOOSdb variables we want to track takes
  * place here and in OnStartUp(), as per the MOOS documentation.
  *
  * @return  a boolean indicating success or failure
@@ -56,38 +60,51 @@ bool CMOOSCoordinateConsumer::OnNewMail(MOOSMSG_LIST &NewMail)
 
   // Process the new mail
 
-  /* EXAMPLE:
   for(p = NewMail.begin(); p != NewMail.end(); p++)
   {
     CMOOSMsg &Message = *p;
+
     if (Message.m_sKey == "NAV_X")
     {
-      dfNavX = Message.m_dfVal;
-      bNavXisCurrent = true;
+      if(Message.m_dfVal != navX) {
+        navX = Message.m_dfVal;
+        newNavXValue = true;
+      }
+
+    } if (Message.m_sKey == "NAV_Y")
+    {
+      if(Message.m_dfVal != navY) {
+        navY = Message.m_dfVal;
+        newNavYValue = true;
+      }
     }
   }
-  */
 
   /* Success */
   return true;
-}                                      
+}
 
 
 /*************************************************************************//**
  * Overloaded function called every 1/Apptick to process data and do work.
  */
 bool CMOOSCoordinateConsumer::Iterate()
-{   
+{
   // Main
+  if(newNavXValue || newNavYValue) {
+    MOOSTrace("Nav local location: (%f,%f)\n", navX, navY);
+    newNavXValue = false;
+    newNavYValue = false;
+  }
 
   /* Success */
-  return true;        
+  return true;
 }
 
 
 /*************************************************************************//**
  * Overloaded function where we initialize the Local UTM coordinate system,
- * perform initializations based on the contents of the .moos file, and 
+ * perform initializations based on the contents of the .moos file, and
  * subscribe to any relevant MOOSdb variables.
  *
  * @return  a boolean indicating success or failure
@@ -99,7 +116,7 @@ bool CMOOSCoordinateConsumer::OnStartUp()
 
   /*
   // Get the latitude origin from the .moos file
-  if (m_MissionReader.GetValue("LatOrigin", sVal)) 
+  if (m_MissionReader.GetValue("LatOrigin", sVal))
   {
     char* end;
     dfLatOrigin = std::strtod(sVal.c_str(), &end);
@@ -108,17 +125,17 @@ bool CMOOSCoordinateConsumer::OnStartUp()
       MOOSTrace("LatOrigin not set; unexpected end of string - FAIL\n");
       MOOSPause(5000);
       exit(1);
-    } 
+    }
   }
-  else 
+  else
   {
     MOOSTrace("LatOrigin not set - FAIL\n");
     MOOSPause(5000);
     exit(1);
-  } 
+  }
 
   // Get the longitude origin from the .moos file
-  if (m_MissionReader.GetValue("LongOrigin", sVal)) 
+  if (m_MissionReader.GetValue("LongOrigin", sVal))
   {
     char* end;
     dfLonOrigin = std::strtod(sVal.c_str(), &end);
@@ -127,17 +144,17 @@ bool CMOOSCoordinateConsumer::OnStartUp()
       MOOSTrace("LonOrigin not set; unexpected end of string - FAIL\n");
       MOOSPause(5000);
       exit(1);
-    } 
+    }
   }
-  else 
+  else
   {
     MOOSTrace("LongOrigin not set - FAIL\n");
     MOOSPause(5000);
     exit(1);
   }
 
-  // Initialize our coordinate origins 
-  if (!m_Geodesy.Initialise(dfLatOrigin, dfLonOrigin)) 
+  // Initialize our coordinate origins
+  if (!m_Geodesy.Initialise(dfLatOrigin, dfLonOrigin))
   {
     MOOSTrace("Geodesy Init failed - FAIL\n");
     MOOSPause(5000);
@@ -148,7 +165,7 @@ bool CMOOSCoordinateConsumer::OnStartUp()
   // Retrieve application-specific configuration parameters
 
   // Register for relevant MOOSdb variables
-  DoRegistrations(); 
+  DoRegistrations();
 
   /* Success */
   return true;
@@ -159,8 +176,7 @@ bool CMOOSCoordinateConsumer::OnStartUp()
  * Register for the variables of interest in the MOOSdb.
  */
 void CMOOSCoordinateConsumer::DoRegistrations()
-{   
-  // EXAMPLE:
-  //m_Comms.Register("NAV_X", 0);
+{
+  m_Comms.Register("NAV_X", 0);
+  m_Comms.Register("NAV_Y", 0);
 }
-
