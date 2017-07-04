@@ -85,9 +85,18 @@ bool CMOOSCoordinateConversion::Iterate()
 {
   // Main
   if(newLatToConvert || newLongToConvert) {
-    MOOSTrace("Nav local location to convert: (%f,%f)\n", latToConvert, longToConvert);
+    MOOSTrace("Recieved new local location to convert: (%f,%f)\n", latToConvert, longToConvert);
     newLatToConvert = false;
     newLongToConvert = false;
+
+    // Convert these coordinates, and notify our results
+    double outputLat, outputLong;
+    m_Geodesy.UTM2LatLong(latToConvert, longToConvert, outputLat, outputLong);
+
+    //MOOSTrace("Converted lat / long: (%f,%f)\n", outputLat, outputLong);
+
+    m_Comms.Notify("CONVERTED_LATITUDE", outputLat);
+    m_Comms.Notify("CONVERTED_LONGITUDE", outputLong);
   }
 
   /* Success */

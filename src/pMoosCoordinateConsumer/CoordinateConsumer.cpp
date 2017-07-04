@@ -64,19 +64,23 @@ bool CMOOSCoordinateConsumer::OnNewMail(MOOSMSG_LIST &NewMail)
   {
     CMOOSMsg &Message = *p;
 
-    if (Message.m_sKey == "NAV_X")
-    {
+    if (Message.m_sKey == "NAV_X") {
       if(Message.m_dfVal != navX) {
         navX = Message.m_dfVal;
         newNavXValue = true;
       }
 
-    } if (Message.m_sKey == "NAV_Y")
-    {
+    } else if (Message.m_sKey == "NAV_Y") {
       if(Message.m_dfVal != navY) {
         navY = Message.m_dfVal;
         newNavYValue = true;
       }
+    } else if(Message.m_sKey == "CONVERTED_LATITUDE") {
+      convertedLatitude = Message.m_dfVal;
+      newConvertedLatitudeValue = true;
+    } else if(Message.m_sKey == "CONVERTED_LONGITUDE") {
+      convertedLongitude = Message.m_dfVal;
+      newConvertedLongitudeValue = true;
     }
   }
 
@@ -99,6 +103,13 @@ bool CMOOSCoordinateConsumer::Iterate()
     //  Let's notify the CoordinateConversion app to get these NAV_X and NAV_Y values converted
     m_Comms.Notify("NAV_X_TO_LONG", navX);
     m_Comms.Notify("NAV_Y_TO_LAT", navY);
+  }
+
+  // See if we have converted location values
+  if(newConvertedLatitudeValue || newConvertedLongitudeValue) {
+    MOOSTrace("Recieved converted location: (%f,%f)\n", convertedLatitude, convertedLongitude);
+    newConvertedLatitudeValue = false;
+    newConvertedLongitudeValue = false;
   }
 
   /* Success */
@@ -135,4 +146,6 @@ void CMOOSCoordinateConsumer::DoRegistrations()
 {
   m_Comms.Register("NAV_X", 0);
   m_Comms.Register("NAV_Y", 0);
+  m_Comms.Register("CONVERTED_LATITUDE", 0);
+  m_Comms.Register("CONVERTED_LONGITUDE", 0);
 }

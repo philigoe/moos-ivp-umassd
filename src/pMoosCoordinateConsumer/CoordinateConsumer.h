@@ -41,10 +41,17 @@ class CMOOSCoordinateConsumer : public CMOOSApp
     //double dfLonOrigin;
     double dfTimeNow;
 
+    // Local position vars
     bool newNavXValue;
     double navX;
     bool newNavYValue;
     double navY;
+
+    //  Converted position -> lat / long vars
+    bool newConvertedLatitudeValue;
+    double convertedLatitude;
+    bool newConvertedLongitudeValue;
+    double convertedLongitude;
 
     // Functions
     void DoRegistrations();
