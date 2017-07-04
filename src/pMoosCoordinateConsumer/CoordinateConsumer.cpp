@@ -95,6 +95,10 @@ bool CMOOSCoordinateConsumer::Iterate()
     MOOSTrace("Nav local location: (%f,%f)\n", navX, navY);
     newNavXValue = false;
     newNavYValue = false;
+
+    //  Let's notify the CoordinateConversion app to get these NAV_X and NAV_Y values converted
+    m_Comms.Notify("NAV_X_TO_LONG", navX);
+    m_Comms.Notify("NAV_Y_TO_LAT", navY);
   }
 
   /* Success */
@@ -113,54 +117,6 @@ bool CMOOSCoordinateConsumer::OnStartUp()
 {
   // Useful temporary variables
   std::string sVal;
-
-  /*
-  // Get the latitude origin from the .moos file
-  if (m_MissionReader.GetValue("LatOrigin", sVal))
-  {
-    char* end;
-    dfLatOrigin = std::strtod(sVal.c_str(), &end);
-    if (!(*end == '\0'))
-    {
-      MOOSTrace("LatOrigin not set; unexpected end of string - FAIL\n");
-      MOOSPause(5000);
-      exit(1);
-    }
-  }
-  else
-  {
-    MOOSTrace("LatOrigin not set - FAIL\n");
-    MOOSPause(5000);
-    exit(1);
-  }
-
-  // Get the longitude origin from the .moos file
-  if (m_MissionReader.GetValue("LongOrigin", sVal))
-  {
-    char* end;
-    dfLonOrigin = std::strtod(sVal.c_str(), &end);
-    if (!(*end == '\0'))
-    {
-      MOOSTrace("LonOrigin not set; unexpected end of string - FAIL\n");
-      MOOSPause(5000);
-      exit(1);
-    }
-  }
-  else
-  {
-    MOOSTrace("LongOrigin not set - FAIL\n");
-    MOOSPause(5000);
-    exit(1);
-  }
-
-  // Initialize our coordinate origins
-  if (!m_Geodesy.Initialise(dfLatOrigin, dfLonOrigin))
-  {
-    MOOSTrace("Geodesy Init failed - FAIL\n");
-    MOOSPause(5000);
-    exit(1);
-  }
-  */
 
   // Retrieve application-specific configuration parameters
 

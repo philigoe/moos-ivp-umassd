@@ -7,7 +7,7 @@
 
 // MOOS Includes
 #include "MOOS/libMOOS/App/MOOSApp.h"
-//#include "MOOS/libMOOSGeodesy/MOOSGeodesy.h"
+#include "MOOS/libMOOSGeodesy/MOOSGeodesy.h"
 
 
 /*************************************************************************//**
@@ -32,13 +32,19 @@ class CMOOSCoordinateConversion : public CMOOSApp
 
   private:
     // Initialize the MOOS coordinate conversion utility
-    //CMOOSGeodesy m_Geodesy;
+    CMOOSGeodesy m_Geodesy;
 
     // Global variables filled by the .moos file
 
     // Global variables
-    //double dfLatOrigin;
-    //double dfLonOrigin;
+    double dfLatOrigin;
+    double dfLonOrigin;
+    bool newLatToConvert;
+    double latToConvert;
+    bool newLongToConvert;
+    double longToConvert;
+
+
     double dfTimeNow;
 
     // Functions
@@ -46,4 +52,3 @@ class CMOOSCoordinateConversion : public CMOOSApp
 };
 
 #endif // #ifndef MOOS_APP_CoordinateConversion_H_
-
