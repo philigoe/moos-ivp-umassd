@@ -24,6 +24,7 @@ ENDIF()
 ADD_SUBDIRECTORY(pMoosTestApp)
 ADD_SUBDIRECTORY(pMoosCoordinateConversion)
 ADD_SUBDIRECTORY(pMoosCoordinateConsumer)
+ADD_SUBDIRECTORY(pMoosDynamicRID)
 
 ##############################################################################
 #                           END of CMakeLists.txt
