@@ -1,0 +1,8 @@
+//----------------------------------------------------------------------------
+ProcessConfig = pMoosDynamicRID
+{
+  AppTick   = 1
+  CommsTick = 1
+
+  //Configuration Parameters
+}

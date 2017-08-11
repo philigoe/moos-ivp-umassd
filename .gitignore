@@ -30,9 +30,12 @@
 
 # Simulated mission data from test mission
 missions/testMission/*
+missions/dynamicRIDMission/data_from_runs/*
 
 # Misc files to exclude
 missions/testMission/.LastOpenedMOOSLogDirectory
+missions/dynamicRIDMission/.LastOpenedMOOSLogDirectory
+
 
 # Built / bin files
 build/*
